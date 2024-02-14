@@ -1,0 +1,36 @@
+name: Ejecutar pruebas UFT
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: microsoft/setup-ufto@v1
+        with:
+          version: '2023'
+          license-type: 'free'
+
+      - name: Configurar entorno
+        env:
+          UFT_ONE_LICENSE_KEY: ${{ secrets.UFT_ONE_LICENSE_KEY }}
+        run: |
+          echo "Configurando entorno..."
+
+      - uses: microsoft/uft-run-tests@v1
+        with:
+          test-paths: '**/*.uft'
+          generate-reports: true
+          parallel-execution: true
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UFT-Resultados
+          path: ${{ env.UFT_ONE_RESULTS_DIR }}
