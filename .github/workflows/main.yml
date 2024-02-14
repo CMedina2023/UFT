@@ -23,13 +23,15 @@ jobs:
         run: |
           echo "Running UFT One..."
           ./prueba_google.vbs
-          
-          # Establecer la ruta del artefacto de prueba
-          echo "::set-output name=artifactPath::/home/runner/work/UFT/UFT/"
+          chmod 777  /home/runner/work/UFT/UFT/
 
-      - name: Upload Test Report
-        if: always()  # Siempre carga el reporte de prueba independientemente del resultado
-        uses: actions/upload-artifact@v2
+      - name: Set output
+        if: success() || failure()
+        id: results
+        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-report
-          path: ${{ steps.Test.outputs.artifactPath }}
+          path: ${{ steps.results.outputs.artifactPath }}
