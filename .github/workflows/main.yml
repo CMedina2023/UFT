@@ -28,9 +28,14 @@ jobs:
         with:
           test-paths: '**/*.uft'
           generate-reports: true
-          parallel-execution: true
-
-      - uses: actions/upload-artifact@v2
+      
+      - name: Set output
+        if: success() || failure()
+        id: results
+        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
+    
+      - uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
-          name: UFT-Resultados
-          path: ${{ env.UFT_ONE_RESULTS_DIR }}
+          name: test-report
+          path: ${{ steps.results.outputs.artifactPath }}
