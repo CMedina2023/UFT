@@ -28,7 +28,7 @@ jobs:
 
       - uses: microsoft/uft-run-tests@v1
         with:
-          test-paths: ./prueba_google.vbs
+          test-paths: prueba_google.vbs
           generate-reports: true
       
       - name: Set output
