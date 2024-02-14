@@ -12,9 +12,6 @@ jobs:
   build:
     runs-on: windows-latest  
 
-    container:
-      image: mcr.microsoft.com/windows/servercore:ltsc2022
-
     steps:
       - name: Checkout código
         uses: actions/checkout@v2
@@ -26,9 +23,6 @@ jobs:
   test:
     runs-on: windows-latest  
 
-    container:
-      image: mcr.microsoft.com/windows/servercore:ltsc2022
-
     steps:
       - name: Checkout código
         uses: actions/checkout@v2
@@ -37,4 +31,3 @@ jobs:
         run: |
           echo "Running UFT One..."
           C:\path\to\uft\onetest.bat run "C:\path\to\uft\project.uft" --license-type free
-          
