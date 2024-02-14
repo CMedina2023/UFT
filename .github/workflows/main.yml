@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/uipath/uft-one-test@v1
+      - uses: actions/uipath/uft-one-test@v2
         with:
           license-type: 'free'
           test-paths: 'prueba_google.vbs'
@@ -25,10 +25,5 @@ jobs:
         if: success() || failure()
         with:
           name: test-report
-          path: ${{ steps.results.outputs.artifactPath }}
-      
-      - name: Set output
-        if: success() || failure()
-        id: results
-        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
+          path: ${{ steps.uipath-uft-one-test.outputs.report-path }}
           
