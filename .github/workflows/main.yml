@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest  
-
     steps:
       - name: Checkout código
         uses: actions/checkout@v2
@@ -22,39 +21,6 @@ jobs:
 
   test:
     runs-on: windows-latest  
-
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v2
-
-      - name: Test
-        run: |
-          echo "Running UFT One..."
-          name: Ejecutar Pruebas UFT One
-
-on:
-  push:
-    branches:
-      - main  
-  pull_request:
-    branches:
-      - main  
-
-jobs:
-  build:
-    runs-on: windows-latest  
-
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v2
-
-      - name: Build
-        run: |
-          echo "Building..."
-
-  test:
-    runs-on: windows-latest  
-
     steps:
       - name: Checkout código
         uses: actions/checkout@v2
@@ -63,4 +29,3 @@ jobs:
         run: |
           echo "Running UFT One..."
           ./prueba_google.vbs
-
