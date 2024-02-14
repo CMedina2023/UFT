@@ -15,29 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: microsoft/setup-ufto@v1
+      - uses: actions/uipath/uft-one-test@v1
         with:
-          version: '2023'
           license-type: 'free'
-
-      - name: Configurar entorno
-        env:
-          UFT_ONE_LICENSE_KEY: ${{ secrets.UFT_ONE_LICENSE_KEY }}
-        run: |
-          echo "Configurando entorno..."
-
-      - uses: microsoft/uft-run-tests@v1
-        with:
-          test-paths: prueba_google.vbs
+          test-paths: 'prueba_google.vbs'
           generate-reports: true
-      
-      - name: Set output
-        if: success() || failure()
-        id: results
-        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
-    
+
       - uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: test-report
           path: ${{ steps.results.outputs.artifactPath }}
+      
+      - name: Set output
+        if: success() || failure()
+        id: results
+        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
+          
