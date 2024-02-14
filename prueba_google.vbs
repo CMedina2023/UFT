@@ -13,5 +13,9 @@ broswer.WaitProperty "readyState", "complete", 10000
 Browser("micclass:=Browser").Page("micclass:=Page").WebEdit("micclass:=Edit").Set "hola mundo"
 Browser("micclass:=Browser").Page("micclass:=Page").WebButton("micclass:=Button", "name:=Buscar").Click
 
+' Registrar eventos en el reporte HTML
+Reporter.ReportEvent micPass, "Navegador abierto", "Se abrió el navegador exitosamente."
+Reporter.ReportEvent micPass, "Búsqueda realizada", "Se realizó la búsqueda correctamente."
+
 ' Cerrar el navegador
 Browser("micclass:=Browser").Close
