@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout código
         uses: actions/checkout@v2
+      - name: Instalar UFT One
+        uses: my-org/uft-one-action@v
 
       - name: Build
         run: |
@@ -27,14 +29,4 @@ jobs:
         run: |
           echo "Running UFT One..."
           ./prueba_google.vbs
-
-          # Después de ejecutar las pruebas, genera el archivo HTML con los resultados
-          uftone.exe -export "C:\\Resultado\\resultado.xml" -format "html"
-
-      - name: Upload HTML Report
-        if: always()  # Cargar el informe independientemente del resultado de las pruebas
-        uses: actions/upload-artifact@v2
-        with:
-          name: html-report
-          path: "C:\\Resultado\\resultado.html"  # Ruta correcta del archivo HTML generado
 
