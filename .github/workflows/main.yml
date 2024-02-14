@@ -19,13 +19,17 @@ jobs:
         run: |
           echo "Building..."
 
-  test:
-    runs-on: windows-latest  
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v2
-
       - name: Test
         run: |
           echo "Running UFT One..."
           ./prueba_google.vbs
+          
+          # Establecer la ruta del artefacto de prueba
+          echo "::set-output name=artifactPath::/home/runner/work/UFT/UFT/"
+
+      - name: Upload Test Report
+        if: always()  # Siempre carga el reporte de prueba independientemente del resultado
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: ${{ steps.Test.outputs.artifactPath }}
