@@ -1,29 +1,40 @@
-name: Ejecutar pruebas UFT
+name: Ejecutar Pruebas UFT One
 
 on:
   push:
     branches:
-      - main
+      - main  
   pull_request:
     branches:
-      - main
+      - main  
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-latest  
+
+    container:
+      image: mcr.microsoft.com/windows/servercore:ltsc2022
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout código
+        uses: actions/checkout@v2
 
-      - uses: actions/uipath/uft-one-test@v2.1.0
-        with:
-          license-type: 'free'
-          test-paths: 'prueba_google.vbs'
-          generate-reports: true
+      - name: Build
+        run: |
+          echo "Building..."
 
-      - uses: actions/upload-artifact@v3
-        if: success() || failure()
-        with:
-          name: test-report
-          path: ${{ steps.uipath-uft-one-test.outputs.report-path }}
+  test:
+    runs-on: windows-latest  
+
+    container:
+      image: mcr.microsoft.com/windows/servercore:ltsc2022
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: |
+          echo "Running UFT One..."
+          C:\path\to\uft\onetest.bat run "C:\path\to\uft\project.uft" --license-type free
           
