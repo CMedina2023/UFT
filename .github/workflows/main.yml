@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main  
-      
+
 permissions:
   contents: read
 
@@ -23,18 +23,18 @@ jobs:
           echo "Building..."
 
       - name: Test
+        id: test
         run: |
           echo "Running UFT One..."
           ./prueba_google.vbs
-          chmod 777  /home/runner/work/UFT/UFT/
 
-      - name: Set output
-        if: success() || failure()
-        id: results
-        run: echo "artifactPath=/home/runner/work/UFT/UFT/" >> $GITHUB_OUTPUT
+          # Después de ejecutar las pruebas, genera el archivo HTML con los resultados
+          uftone.exe -export "C:\\Resultado\\resultado.xml" -format "html"
 
-      - uses: actions/upload-artifact@v3
-        if: success() || failure()
+      - name: Upload HTML Report
+        if: always()  # Cargar el informe independientemente del resultado de las pruebas
+        uses: actions/upload-artifact@v2
         with:
-          name: test-report
-          path: ${{ steps.results.outputs.artifactPath }}
+          name: html-report
+          path: "C:\\Resultado\\resultado.html"  # Ruta correcta del archivo HTML generado
+
